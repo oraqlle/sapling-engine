@@ -29,7 +29,3 @@ run and enabling you to create your games.
 * `external/` - Third party codebases imported using git submodules
 * `servers/` - Stateful objects used subsystems interact with to fullfil capabilities
 
-> Note: Initial architecture inspired from Godot's
-> * <https://docs.godotengine.org/en/stable/engine_details/architecture/godot_architecture_diagram.html>
-> * <https://godotengine.org/article/why-does-godot-use-servers-and-rids/>
-
