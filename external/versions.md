@@ -3,3 +3,5 @@
 This file serves the purpose of documenting what version a particular submodule is
 required in order to build Sapling.
 
+* stb headers - latest (<f1c79c02822848a9bed4315b12c8c8f3761e1296>)
+
