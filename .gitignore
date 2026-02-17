@@ -1,9 +1,3 @@
-# Extension-less Files (executables)
-*
-!/**/
-!*.*
-!LICENSE
-
 # Prerequisites
 *.d
 

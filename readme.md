@@ -4,7 +4,7 @@ A small lightweight game engine made directly on top of Vulkan.
 
 ## Building
 
-TODO
+Look at the `docs/building.md` file for instructions on how to build Sapling.
 
 ## Roadmap
 
@@ -27,8 +27,4 @@ run and enabling you to create your games.
   * control project settings
 * `entry/` - Infrastructure of creating entry point of games built with Sapling
 * `servers/` - Stateful objects used subsystems interact with to fullfil capabilities
-
-> Note: Initial architecture inspired from Godot's
-> * <https://docs.godotengine.org/en/stable/engine_details/architecture/godot_architecture_diagram.html>
-> * <https://godotengine.org/article/why-does-godot-use-servers-and-rids/>
 
