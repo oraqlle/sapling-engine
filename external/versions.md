@@ -5,4 +5,5 @@ required in order to build Sapling.
 
 * stb headers - latest (<f1c79c02822848a9bed4315b12c8c8f3761e1296>)
 * glm - v1.0.3
+* glfw - v3.4
 
