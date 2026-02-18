@@ -4,7 +4,7 @@ A small lightweight game engine made directly on top of Vulkan.
 
 ## Building
 
-TODO
+Look at the `docs/building.md` file for instructions on how to build Sapling.
 
 ## Roadmap
 
@@ -27,5 +27,6 @@ run and enabling you to create your games.
   * control project settings
 * `entry/` - Infrastructure of creating entry point of games built with Sapling
 * `external/` - Third party codebases imported using git submodules
+* `scripts/` - Helper scripts for setting up developer environment
 * `servers/` - Stateful objects used subsystems interact with to fullfil capabilities
 
