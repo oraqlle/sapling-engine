@@ -2,7 +2,15 @@
 Language:        Cpp
 # BasedOnStyle:  LLVM
 AccessModifierOffset: -4
-AlignAfterOpenBracket: Align
+AlignAfterOpenBracket: BlockIndent
+# For use with clang-format-22
+# AlignAfterOpenBracket: true
+# BreakAfterOpenBracketBracedList: true
+# BreakAfterOpenBracketFunction: true
+# BreakAfterOpenBracketIf: true
+# BreakBeforeCloseBracketBracedList: true
+# BreakBeforeCloseBracketFunction: true
+# BreakBeforeCloseBracketIf: true
 AlignArrayOfStructures: None
 AlignConsecutiveMacros: None
 AlignConsecutiveAssignments: None
@@ -132,7 +140,7 @@ PenaltyReturnTypeOnItsOwnLine: 60
 PenaltyIndentedWhitespace: 0
 PointerAlignment: Right
 PPIndentWidth:   -1
-ReferenceAlignment: Pointer
+ReferenceAlignment: Left
 ReflowComments:  true
 RemoveBracesLLVM: false
 SeparateDefinitionBlocks: Leave

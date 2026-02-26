@@ -26,7 +26,7 @@ FetchContent_MakeAvailable(stb)
 find_package(glfw3 3.4 REQUIRED)
 find_package(glm 1.0.1 REQUIRED)
 find_package(Vulkan 1.4.341 REQUIRED)
-find_package(tinyobjloader 1.0.4 REQUIRED)
+find_package(tinyobjloader 2.0.0 REQUIRED)
 
 # ---- Find Programs ----
 
@@ -46,7 +46,7 @@ target_compile_definitions(VulkanSDK
 add_executable(entry entry/entry.cxx)
 set_target_properties(entry PROPERTIES CXX_STANDARD 20)
 target_include_directories(entry PRIVATE ${STD_INCLUDEDIR})
-target_link_libraries(entry PRIVATE Vulkan::sdk glfw3 stb)
+target_link_libraries(entry PRIVATE Vulkan::sdk glfw3)
 
 target_compile_definitions(entry PRIVATE "VULKAN_HPP_HANDLE_ERROR_OUT_OF_DATE_AS_SUCCESS")
 
