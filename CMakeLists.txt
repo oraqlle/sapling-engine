@@ -9,6 +9,8 @@ project(
 
 # ---- Global Defines ----
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # ---- Options ----
 
@@ -38,9 +40,6 @@ find_package(glm 1.0.1 REQUIRED)
 find_package(Vulkan 1.4.341 REQUIRED)
 find_package(tinyobjloader 2.0.0 REQUIRED)
 
-# ---- Find Programs ----
-
-
 # ---- Vulkan SDK Target ----
 add_library(VulkanSDK INTERFACE)
 add_library(Vulkan::sdk ALIAS VulkanSDK)
@@ -50,9 +49,10 @@ target_compile_definitions(VulkanSDK
 )
 
 # ---- Engine Library ----
-
+add_subdirectory(core)
 
 # ---- Entry Point Bootstrapping ----
+add_subdirectory(entrypoint)
 add_executable(entry entry/entry.cxx)
 set_target_properties(entry PROPERTIES CXX_STANDARD 20)
 target_include_directories(entry PRIVATE ${std_INCLUDE_DIR})
@@ -61,5 +61,5 @@ target_link_libraries(entry PRIVATE Vulkan::sdk glfw3)
 target_compile_definitions(entry PRIVATE "VULKAN_HPP_HANDLE_ERROR_OUT_OF_DATE_AS_SUCCESS")
 
 # ---- Installation ----
-install(TARGETS entry RUNTIME COMPONENT game_runtime)
+#install(TARGETS entry RUNTIME COMPONENT game_runtime)
 include(CPack)
