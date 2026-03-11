@@ -10,10 +10,10 @@
 #include <cstring>
 #include <exception>
 #include <iostream>
+#include <map>
 #include <stdexcept>
 #include <string>
-
-using namespace std::literals;
+#include <utility>
 
 constexpr uint32_t WIDTH = 800;
 constexpr uint32_t HEIGHT = 600;
@@ -27,10 +27,13 @@ constexpr bool ENABLE_VALIDATION_LAYERS = false;
 class HelloTriangleApp {
 private:
     GLFWwindow *m_window = nullptr;
+
     vk::raii::Context m_context;
     vk::raii::Instance m_instance = nullptr;
+    vk::raii::PhysicalDevice m_physical_device = nullptr;
 
     static constexpr std::array m_req_validation_layers = {"VK_LAYER_KHRONOS_validation"};
+    static constexpr std::array m_req_devices_exts = {vk::KHRSwapchainExtensionName};
     std::vector<const char *> m_req_instance_exts;
 
 public:
@@ -51,13 +54,27 @@ private:
 
         m_window = glfwCreateWindow(WIDTH, HEIGHT, "Sapling Engine", nullptr, nullptr);
 
-        _M_gen_required_instance_extensions();
+        m_req_instance_exts = gen_required_instance_extensions();
+    }
+
+    static auto gen_required_instance_extensions() -> std::vector<const char *> {
+        auto glfw_ext_count = uint32_t{0};
+        auto glfw_extensions = glfwGetRequiredInstanceExtensions(&glfw_ext_count);
+
+        auto extensions = std::vector(glfw_extensions, glfw_extensions + glfw_ext_count);
+
+        /* Ensure support for Vulkan on macOS (via MoltonVK)
+         * as if from VulkanSDK 1.3.216 */
+        extensions.push_back(vk::KHRPortabilityEnumerationExtensionName);
+
+        return extensions;
     }
 
     auto init_vulkan() -> void {
         std::clog << "Initialising Vulkan ...\n";
 
         create_instance();
+        pick_physical_device();
     }
 
     auto main_loop() -> void {
@@ -108,7 +125,7 @@ private:
         const auto unsupported_prop_iter =
             std::ranges::find_if(m_req_instance_exts, [&extension_props](const auto ext) {
                 return std::ranges::none_of(extension_props, [&ext](const auto& prop) {
-                    return strcmp(prop.extensionName, ext);
+                    return strcmp(prop.extensionName, ext) == 0;
                 });
             });
 
@@ -134,7 +151,7 @@ private:
             const auto unsupported_layer_iter = std::ranges::find_if(
                 m_req_validation_layers, [&layer_props](const auto layer) {
                     return std::ranges::none_of(layer_props, [&layer](const auto& prop) {
-                        return strcmp(prop.layerName, layer);
+                        return strcmp(prop.layerName, layer) == 0;
                     });
                 }
             );
@@ -148,18 +165,93 @@ private:
         }
     }
 
-private: // Internal helper methods
-    auto _M_gen_required_instance_extensions() -> void {
-        auto glfw_ext_count = uint32_t{0};
-        auto glfw_extensions = glfwGetRequiredInstanceExtensions(&glfw_ext_count);
+    auto pick_physical_device() -> void {
+        auto devices = m_instance.enumeratePhysicalDevices();
 
-        auto extensions = std::vector(glfw_extensions, glfw_extensions + glfw_ext_count);
+        if (devices.empty()) {
+            throw std::runtime_error("Failed to find GPUs with Vulkan support!");
+        }
 
-        /* Ensure support for Vulkan on macOS (via MoltonVK)
-         * as if from VulkanSDK 1.3.216 */
-        extensions.push_back(vk::KHRPortabilityEnumerationExtensionName);
+        auto candidates = std::multimap<int32_t, vk::raii::PhysicalDevice>{};
 
-        m_req_instance_exts = extensions;
+        for (const auto& device : devices) {
+            auto score = device_suitablility_score(device);
+            candidates.insert(std::make_pair(score, device));
+        }
+
+        if (const auto& opt = candidates.rbegin(); opt->first > 0) {
+            m_physical_device = std::move(opt->second);
+        } else {
+            throw std::runtime_error("Failed to find suitable GPU!");
+        }
+    }
+
+    auto device_suitablility_score(const vk::raii::PhysicalDevice& device) const
+        -> int32_t {
+        const auto device_props = m_physical_device.getProperties();
+        const auto device_feats = m_physical_device.getFeatures();
+        const auto device_exts = device.enumerateDeviceExtensionProperties();
+        auto score = int32_t{0};
+
+        if (device_props.apiVersion >= vk::ApiVersion13) {
+            score += 1000;
+        } else if (device_props.apiVersion >= vk::ApiVersion14) {
+            score += 2000;
+        } else {
+            score -= 1000;
+        }
+
+        if (device_props.deviceType == vk::PhysicalDeviceType::eDiscreteGpu) {
+            score += 1000;
+        }
+
+        score += device_props.limits.maxImageDimension2D;
+
+        auto queue_families_props = device.getQueueFamilyProperties();
+        if (std::ranges::any_of(queue_families_props, [](const auto& qfprops) {
+                return !!(qfprops.queueFlags & vk::QueueFlagBits::eGraphics);
+            })) {
+            score += 1000;
+        } else {
+            score -= 1000;
+        }
+
+
+        for (const auto req_ext : m_req_devices_exts) {
+            if (std::ranges::any_of(device_exts, [&req_ext](const auto& ext) {
+                    return strcmp(req_ext, ext.extensionName) == 0;
+                })) {
+                score += 1000;
+            } else {
+                score -= 1000;
+            }
+        }
+
+        if (device_feats.geometryShader) {
+            score += 1000;
+        } else {
+            score -= 1000;
+        }
+
+        auto features2 = device.template getFeatures2<
+            vk::PhysicalDeviceFeatures2, vk::PhysicalDeviceVulkan13Features,
+            vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>();
+
+        if (features2.template get<vk::PhysicalDeviceVulkan13Features>()
+                .dynamicRendering) {
+            score += 1000;
+        } else {
+            score -= 1000;
+        }
+
+        if (features2.template get<vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>()
+                .extendedDynamicState) {
+            score += 1000;
+        } else {
+            score -= 1000;
+        };
+
+        return score;
     }
 };
 

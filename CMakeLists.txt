@@ -21,6 +21,16 @@ FetchContent_Declare(
     GIT_TAG f1c79c02822848a9bed4315b12c8c8f3761e1296
 )
 FetchContent_MakeAvailable(stb)
+FetchContent_GetProperties(stb)
+
+if(NOT stb_POPULATED)
+    FetchContent_Populate(stb)
+    message(STATUS "stb_image.h not populated.")
+endif()
+
+set(std_INCLUDE_DIR ${stb_SOURCE_DIR})
+
+mark_as_advanced(stb_INCLUDE_DIR)
 
 # ---- Find Packages ----
 find_package(glfw3 3.4 REQUIRED)
@@ -45,7 +55,7 @@ target_compile_definitions(VulkanSDK
 # ---- Entry Point Bootstrapping ----
 add_executable(entry entry/entry.cxx)
 set_target_properties(entry PROPERTIES CXX_STANDARD 20)
-target_include_directories(entry PRIVATE ${STD_INCLUDEDIR})
+target_include_directories(entry PRIVATE ${std_INCLUDE_DIR})
 target_link_libraries(entry PRIVATE Vulkan::sdk glfw3)
 
 target_compile_definitions(entry PRIVATE "VULKAN_HPP_HANDLE_ERROR_OUT_OF_DATE_AS_SUCCESS")

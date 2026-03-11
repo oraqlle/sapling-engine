@@ -44,3 +44,9 @@
 .clangd
 .cache
 
+# Log and Debugging
+log/
+logs/
+*.log
+vgcore.*
+
