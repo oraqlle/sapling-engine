@@ -1,4 +1,4 @@
-// <core/resources.resource_handle.h> -*- C++ -*-
+// <core/resources/resource_handle.h> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -20,20 +20,46 @@
 #ifndef SAPLING_ENGINE_RESOURCE_HANDLE_H
 #define SAPLING_ENGINE_RESOURCE_HANDLE_H
 
-#include <resource_manager.h>
-
 #include <string>
 
 namespace sap::core::resources {
 
-template<typename T>
+class ResourceManager; //< forward declare ResourceManager
+
+template <typename T>
 class ResourceHandle {
 private:
     std::string m_resource_id;
     ResourceManager *m_resource_manager;
 
-    auto _M_internal_method() -> void;
-};
+public:
+    ResourceHandle()
+        : m_resource_manager(nullptr) {}
+
+    ResourceHandle(const std::string& id, ResourceManager *manager)
+        : m_resource_id(id)
+        , m_resource_manager(manager) {}
+
+    auto get() const -> T * {
+        if (!m_resource_manager) {
+            return nullptr;
+        }
+
+        return m_resource_manager->get_resource<T>(m_resource_id);
+    }
+
+    auto is_valid() const -> bool {
+        return m_resource_manager && m_resource_manager->has_resource<T>(m_resource_id);
+    }
+
+    auto id() const -> const std::string& { return m_resource_id; }
+
+    auto operator->() const -> T * { return get(); }
+
+    auto operator*() const -> T& { return *get(); }
+
+    operator bool() const { return is_valid(); }
+}; // class ResourceHandle
 
 } // namespace sap::core::resources
 
