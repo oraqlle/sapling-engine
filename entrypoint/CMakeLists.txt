@@ -19,5 +19,5 @@ target_link_libraries(
     PRIVATE
         Vulkan::sdk
         glfw3
-        core_resources
+        sapling-core-resources
 )

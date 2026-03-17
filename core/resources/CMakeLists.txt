@@ -5,17 +5,17 @@ cmake_minimum_required(VERSION 3.31)
 # ---- module: resources ----
 message("Compiling module: [resources] for [core]")
 
-add_library(core_resources SHARED)
-target_compile_features(core_resources PUBLIC cxx_std_20)
+add_library(sapling-core-resources SHARED)
+target_compile_features(sapling-core-resources PUBLIC cxx_std_20)
 
 target_sources(
-    core_resources
+    sapling-core-resources
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/base_resource.cxx"
         "${CMAKE_CURRENT_SOURCE_DIR}/resource_manager.cxx"
         #"${CMAKE_CURRENT_SOURCE_DIR}/shader_resource.cxx"
         #"${CMAKE_CURRENT_SOURCE_DIR}/mesh_resource.cxx"
-        #"${CMAKE_CURRENT_SOURCE_DIR}/texture_resource.cxx"
+        "${CMAKE_CURRENT_SOURCE_DIR}/texture_resource.cxx"
     PUBLIC
         FILE_SET public_headers
         TYPE HEADERS
@@ -29,7 +29,7 @@ target_sources(
             "${CMAKE_CURRENT_SOURCE_DIR}/base_resource.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/resource_handle.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/resource_manager.h"
-            #"${CMAKE_CURRENT_SOURCE_DIR}/shader_resource.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/shader_resource.h"
             #"${CMAKE_CURRENT_SOURCE_DIR}/mesh_resource.h"
             #"${CMAKE_CURRENT_SOURCE_DIR}/texture_resource.h"
 )
