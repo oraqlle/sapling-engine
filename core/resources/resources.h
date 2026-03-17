@@ -1,4 +1,4 @@
-// <core/resources/base_resource.cxx> -*- C++ -*-
+// <core/resources/resources.h> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,19 +17,15 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
+#ifndef SAPLING_ENGINE_RESOURCES_H
+#define SAPLING_ENGINE_RESOURCES_H
+
 #include <base_resource.h>
+#include <resource_handle.h>
+#include <resource_manager.h>
 
-namespace sap::core::resources {
+// #include <mesh_resource.h>
+// #include <shader_resource.h>
+// #include <texture_resource.h>
 
-auto Resource::get_id() const -> const std::string& { return m_resource_id; }
-
-auto Resource::is_loaded() const -> bool { return loaded; }
-
-auto Resource::load() -> bool {
-    loaded = do_load();
-    return loaded;
-}
-
-auto Resource::unload() -> void { loaded = do_unload(); }
-
-} // namespace sap::core::resources
+#endif // SAPLING_ENGINE_RESOURCES_H

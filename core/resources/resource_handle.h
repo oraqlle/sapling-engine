@@ -20,27 +20,29 @@
 #ifndef SAPLING_ENGINE_RESOURCE_HANDLE_H
 #define SAPLING_ENGINE_RESOURCE_HANDLE_H
 
+#include <resource_manager.h>
+
 #include <string>
 
 namespace sap::core::resources {
 
-class ResourceManager; //< forward declare ResourceManager
+class ResourceManager;
 
 template <typename T>
 class ResourceHandle {
 private:
     std::string m_resource_id;
-    ResourceManager *m_resource_manager;
+    ResourceManager* m_resource_manager;
 
 public:
     ResourceHandle()
         : m_resource_manager(nullptr) {}
 
-    ResourceHandle(const std::string& id, ResourceManager *manager)
+    ResourceHandle(const std::string& id, ResourceManager* manager)
         : m_resource_id(id)
         , m_resource_manager(manager) {}
 
-    auto get() const -> T * {
+    auto get() const -> T* {
         if (!m_resource_manager) {
             return nullptr;
         }
@@ -54,11 +56,12 @@ public:
 
     auto id() const -> const std::string& { return m_resource_id; }
 
-    auto operator->() const -> T * { return get(); }
+    auto operator->() const -> T* { return get(); }
 
     auto operator*() const -> T& { return *get(); }
 
     operator bool() const { return is_valid(); }
+
 }; // class ResourceHandle
 
 } // namespace sap::core::resources

@@ -1,4 +1,4 @@
-// <core/resources/base_resource.cxx> -*- C++ -*-
+// <core/resources/resource_manager.cxx> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,19 +17,20 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#include <base_resource.h>
+#include <resource_manager.h>
 
 namespace sap::core::resources {
 
-auto Resource::get_id() const -> const std::string& { return m_resource_id; }
+auto ResourceManager::unload_all() -> void {
+    for (auto& [type, type_resources] : resources) {
+        for (auto& [id, resource] : type_resources) {
+            resource->unload();
+        }
 
-auto Resource::is_loaded() const -> bool { return loaded; }
+        type_resources.clear();
+    }
 
-auto Resource::load() -> bool {
-    loaded = do_load();
-    return loaded;
+    ref_counts.clear();
 }
-
-auto Resource::unload() -> void { loaded = do_unload(); }
 
 } // namespace sap::core::resources
