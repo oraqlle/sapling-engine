@@ -14,7 +14,7 @@ target_sources(
         "${CMAKE_CURRENT_SOURCE_DIR}/base_resource.cxx"
         "${CMAKE_CURRENT_SOURCE_DIR}/resource_manager.cxx"
         #"${CMAKE_CURRENT_SOURCE_DIR}/shader_resource.cxx"
-        #"${CMAKE_CURRENT_SOURCE_DIR}/mesh_resource.cxx"
+        "${CMAKE_CURRENT_SOURCE_DIR}/mesh_resource.cxx"
         "${CMAKE_CURRENT_SOURCE_DIR}/texture_resource.cxx"
     PUBLIC
         FILE_SET public_headers
@@ -30,7 +30,7 @@ target_sources(
             "${CMAKE_CURRENT_SOURCE_DIR}/resource_handle.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/resource_manager.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/shader_resource.h"
-            #"${CMAKE_CURRENT_SOURCE_DIR}/mesh_resource.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/mesh_resource.h"
             #"${CMAKE_CURRENT_SOURCE_DIR}/texture_resource.h"
 )
 
