@@ -17,7 +17,7 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#include <base_resource.h>
+#include "base_resource.h"
 
 namespace sap::core::resources {
 

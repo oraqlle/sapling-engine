@@ -20,9 +20,9 @@
 #ifndef SAPLING_ENGINE_SHADER_RESOURCE_H
 #define SAPLING_ENGINE_SHADER_RESOURCE_H
 
-#include <base_resource.h>
-#include <resource_handle.h>
-#include <resource_manager.h>
+#include "base_resource.h"
+#include "resource_handle.h"
+#include "resource_manager.h"
 
 #include "vulkan/vulkan.hpp"
 

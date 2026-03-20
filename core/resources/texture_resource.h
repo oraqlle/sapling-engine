@@ -20,9 +20,9 @@
 #ifndef SAPLING_ENGINE_TEXTURE_RESOURCE_H
 #define SAPLING_ENGINE_TEXTURE_RESOURCE_H
 
-#include <base_resource.h>
-#include <resource_handle.h>
-#include <resource_manager.h>
+#include "base_resource.h"
+#include "resource_handle.h"
+#include "resource_manager.h"
 
 #include "vulkan/vulkan.hpp"
 
@@ -50,11 +50,11 @@ public:
 
     ~Texture() override;
 
-    auto get_image() const -> vk::Image;
+    auto image() const -> vk::Image;
 
-    auto get_image_view() const -> vk::ImageView;
+    auto image_view() const -> vk::ImageView;
 
-    auto get_sampler() const -> vk::Sampler;
+    auto sampler() const -> vk::Sampler;
 
 protected:
     bool do_load() override;

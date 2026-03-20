@@ -17,9 +17,9 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#include <texture_resource.h>
+#include "texture_resource.h"
 
-#include <vulkan/vulkan.hpp>
+#include "vulkan/vulkan.hpp"
 
 #include <cstddef>
 #include <format>
@@ -32,11 +32,11 @@ Texture::Texture(const std::string& id)
 
 Texture::~Texture() { unload(); }
 
-auto Texture::get_image() const -> vk::Image { return m_image; }
+auto Texture::image() const -> vk::Image { return m_image; }
 
-auto Texture::get_image_view() const -> vk::ImageView { return m_image_view; }
+auto Texture::image_view() const -> vk::ImageView { return m_image_view; }
 
-auto Texture::get_sampler() const -> vk::Sampler { return m_sampler; }
+auto Texture::sampler() const -> vk::Sampler { return m_sampler; }
 
 auto Texture::do_load() -> bool {
     auto file_path = std::format("textures/{}.ktx", get_id());

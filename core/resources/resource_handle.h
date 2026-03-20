@@ -20,7 +20,7 @@
 #ifndef SAPLING_ENGINE_RESOURCE_HANDLE_H
 #define SAPLING_ENGINE_RESOURCE_HANDLE_H
 
-#include <resource_manager.h>
+#include "resource_manager.h"
 
 #include <string>
 
