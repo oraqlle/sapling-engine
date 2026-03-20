@@ -19,8 +19,11 @@
 
 #include <mesh_resource.h>
 
+#include "vulkan/vulkan.hpp"
+
 #include <format>
 #include <string>
+#include <vector>
 
 namespace sap::core::resources {
 

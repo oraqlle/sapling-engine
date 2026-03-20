@@ -29,10 +29,11 @@ private:
     std::string m_resource_id;
     bool loaded = false;
 
-public:
+protected:
     explicit Resource(const std::string& id)
         : m_resource_id(id) {}
 
+public:
     virtual ~Resource() = default;
 
     auto get_id() const -> const std::string&;

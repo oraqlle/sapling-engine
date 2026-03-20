@@ -27,6 +27,7 @@
 #include "vulkan/vulkan.hpp"
 
 #include <string>
+#include <vector>
 
 namespace sap::core::resources {
 
@@ -69,6 +70,7 @@ public:
 
 protected:
     bool do_load() override;
+
     bool do_unload() override;
 
 private:

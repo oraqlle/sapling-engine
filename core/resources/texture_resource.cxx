@@ -19,7 +19,11 @@
 
 #include <texture_resource.h>
 
+#include <vulkan/vulkan.hpp>
+
+#include <cstddef>
 #include <format>
+#include <vector>
 
 namespace sap::core::resources {
 
