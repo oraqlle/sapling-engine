@@ -12,6 +12,7 @@ target_sources(
     sapling-core-resources
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/base_resource.cxx"
+        "${CMAKE_CURRENT_SOURCE_DIR}/async_resource_manager.cxx"
         "${CMAKE_CURRENT_SOURCE_DIR}/resource_manager.cxx"
         "${CMAKE_CURRENT_SOURCE_DIR}/shader_resource.cxx"
         "${CMAKE_CURRENT_SOURCE_DIR}/mesh_resource.cxx"
@@ -28,6 +29,7 @@ target_sources(
         FILES
             "${CMAKE_CURRENT_SOURCE_DIR}/base_resource.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/resource_handle.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/async_resource_manager.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/resource_manager.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/shader_resource.h"
             "${CMAKE_CURRENT_SOURCE_DIR}/mesh_resource.h"

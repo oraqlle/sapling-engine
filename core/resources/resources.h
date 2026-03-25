@@ -24,6 +24,8 @@
 #include <resource_handle.h>
 #include <resource_manager.h>
 
+#include <async_resource_manager.h>
+
 #include <mesh_resource.h>
 #include <shader_resource.h>
 #include <texture_resource.h>
