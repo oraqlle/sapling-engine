@@ -1,4 +1,4 @@
-// <core/renderer/renderer.h> -*- C++ -*-
+// <core/resources/renderer_pipeline.cxx> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,10 +17,21 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#ifndef SAPLING_ENGINE_RENDERER_H
-#define SAPLING_ENGINE_RENDERER_H
+#include "renderer_pipeline.h"
 
-#include <culling_system.h>
-#include <render_graph.h>
+namespace sap::core::renderer {
 
-#endif // SAPLING_ENGINE_RENDERER_H
+auto transition_image_layout(
+    vk::raii::CommandBuffer& cmdbuf, vk::Image image, vk::Format format,
+    vk::ImageLayout old_layout, vk::ImageLayout new_layout
+) -> void {}
+
+auto render_frame(
+    vk::raii::Device& device, vk::raii::Queue graphics_queue,
+    vk::raii::Queue present_queue
+) -> void {}
+
+auto setup_deferred_renderer(RenderGraph& graph, uint32_t width, uint32_t height)
+    -> void {}
+
+} // namespace sap::core::renderer

@@ -12,6 +12,7 @@ target_sources(
     sapling-core-renderer
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/culling_system.cxx"
+        "${CMAKE_CURRENT_SOURCE_DIR}/render_graph.cxx"
     PUBLIC
         FILE_SET public_headers
         TYPE HEADERS
@@ -23,5 +24,6 @@ target_sources(
         BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/"
         FILES
             "${CMAKE_CURRENT_SOURCE_DIR}/culling_system.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/render_graph.h"
 )
 

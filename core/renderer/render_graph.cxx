@@ -1,4 +1,4 @@
-// <core/renderer/renderer.h> -*- C++ -*-
+// <core/resources/render_graph.cxx> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,10 +17,12 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#ifndef SAPLING_ENGINE_RENDERER_H
-#define SAPLING_ENGINE_RENDERER_H
+#include "render_graph.h"
 
-#include <culling_system.h>
-#include <render_graph.h>
 
-#endif // SAPLING_ENGINE_RENDERER_H
+namespace sap::core::renderer {
+
+
+}
+
+} // namespace sap::core::renderer
