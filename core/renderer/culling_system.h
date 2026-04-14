@@ -26,6 +26,7 @@ namespace sap::core::renderer {
 
 class CullingSystem {
 private:
+    // Note: Possibly use std::weak_ptr<>, std::shared_ptr or std::optional<>
     Camera *m_camera;
     std::vector<Entity *> m_visible_entities;
 
