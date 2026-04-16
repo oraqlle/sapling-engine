@@ -1,4 +1,4 @@
-// <core/resources/culling_system.h> -*- C++ -*-
+// <core/resources/lighting_render_pass.h> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,30 +17,38 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#ifndef SAPLING_ENGINE_CULLING_SYSTEM_H
-#define SAPLING_ENGINE_CULLING_SYSTEM_H
+#ifndef SAPLING_ENGINE_LIGHTING_RENDER_PASS_H
+#define SAPLING_ENGINE_LIGHTING_RENDER_PASS_H
 
-#include <vector>
+#include "geometry_render_pass.h"
+#include "render_pass.h"
+
+#include "vulkan/vulkan_raii.hpp"
+
+#include <string>
 
 namespace sap::core::renderer {
 
-class CullingSystem {
+class LightingRenderPass : public RenderPass {
 private:
-    // Note: Possibly use std::weak_ptr<>, std::shared_ptr or std::optional<>
-    Camera *m_camera;
-    std::vector<Entity *> m_visible_entities;
+    GeometryRenderPass *m_geo_pass;
+    std::vector<Light *> m_lights;
 
 public:
-    explicit CullingSystem(Camera *camera);
+    explicit LightingRenderPass(const std::string& name, GeometryRenderPass *geo_pass);
 
-    auto change_camera(Camera *to_camera) -> void;
+    void add_light(Light *light);
 
-    auto cull_scene(const std::vector<Entity *>& entities) -> void;
+    void remove_light(Light *light);
 
-    auto visible_entities() const -> const std::vector<Entity *>&;
+protected:
+    void begin_pass(vk::raii::CommandBuffer& cmdbuf) override;
 
-}; // class CullingSystem
+    void render(vk::raii::CommandBuffer& cmdbuf) override;
+
+    void end_pass(vk::raii::CommandBuffer& cmdbuf) override;
+}; // class LightingRenderPass
 
 } // namespace sap::core::renderer
 
-#endif // SAPLING_ENGINE_CULLING_SYSTEM_H
+#endif // SAPLING_ENGINE_LIGHTING_RENDER_PASS_H

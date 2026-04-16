@@ -20,7 +20,14 @@
 #ifndef SAPLING_ENGINE_RENDERER_H
 #define SAPLING_ENGINE_RENDERER_H
 
-#include <culling_system.h>
-#include <render_graph.h>
+#include "culling_system.h"
+#include "geometry_render_pass.h"
+#include "lighting_render_pass.h"
+#include "post_processing_render_pass.h"
+#include "render_graph.h"
+#include "render_pass.h"
+#include "render_pass_manager.h"
+#include "render_target.h"
+#include "renderer_pipeline.h"
 
 #endif // SAPLING_ENGINE_RENDERER_H
