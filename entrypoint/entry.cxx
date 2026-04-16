@@ -216,7 +216,6 @@ private:
             score -= 1000;
         }
 
-
         for (const auto req_ext : m_req_devices_exts) {
             if (std::ranges::any_of(device_exts, [&req_ext](const auto& ext) {
                     return strcmp(req_ext, ext.extensionName) == 0;

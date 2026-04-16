@@ -20,6 +20,7 @@
 #ifndef SAPLING_ENGINE_RENDER_GRAPH_H
 #define SAPLING_ENGINE_RENDER_GRAPH_H
 
+#include "vulkan/vulkan.hpp"
 #include "vulkan/vulkan_raii.hpp"
 
 #include <functional>
@@ -73,19 +74,27 @@ private:
 public:
     explicit RenderGraph(vk::raii::Device& device);
 
+    /**
+     * @brief Resource registration interface for declaring all resources used during
+     * rendering. This method establishes resource metadata without creating actual GPU
+     * resources
+     */
     auto add_resource(
         const std::string& name, vk::Format format, vk::Extent2D extent,
         vk::ImageUsageFlags usage, vk::ImageLayout initial_layout,
         vk::ImageLayout final_layout
     ) -> void;
 
+    /**
+     * @brief
+     */
     auto add_pass(
         const std::string& name, const std::vector<std::string>& inputs,
         const std::vector<std::string>& outputs,
         std::function<void(vk::raii::CommandBuffer&)> execute_func
     ) -> void;
 
-    auto get_resource(const std::string& name);
+    auto get_resource(const std::string& name) -> Resource *;
 
     /**
      * Rendergraph compilation - transforms declarative descriptions into executable
@@ -99,9 +108,12 @@ public:
      * synchronization. This method transforms the compiled rendergraph into actual GPU
      * work
      */
-    auto execute() -> void;
+    auto execute(vk::raii::CommandBuffer& cmdbuf, vk::Queue queue) -> void;
 
 private:
+    /**
+     * @brief
+     */
     auto _M_find_memory_type(uint32_t type_filter, vk::MemoryPropertyFlags props)
         -> uint32_t;
 
