@@ -44,17 +44,9 @@ public:
 
     auto height() const -> uint32_t;
 
-    auto colour_image() -> vk::raii::Image;
+    auto colour_image_view() const -> vk::raii::ImageView;
 
-    auto colour_mem() -> vk::raii::DeviceMemory;
-
-    auto colour_image_view() -> vk::raii::ImageView;
-
-    auto dpeth_image() -> vk::raii::Image;
-
-    auto depth_mem() -> vk::raii::DeviceMemory;
-
-    auto depth_image_view() -> vk::raii::ImageView;
+    auto depth_image_view() const -> vk::raii::ImageView;
 
 private:
     auto _M_create_colour_resource() -> void;

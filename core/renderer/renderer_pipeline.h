@@ -24,19 +24,30 @@
 
 #include "vulkan/vulkan_raii.hpp"
 
+/**
+ * @brief
+ */
 auto transition_image_layout(
     vk::raii::CommandBuffer& cmdbuf, vk::Image image, vk::Format format,
     vk::ImageLayout old_layout, vk::ImageLayout new_layout
 ) -> void;
 
+/**
+ * @brief Comprehensive frame rendering with proper synchronization. This function
+ * demonstrates the complete cycle of frame rendering coordination
+ */
 auto render_frame(
     vk::raii::Device& device, vk::raii::Queue graphics_queue,
     vk::raii::Queue present_queue
 ) -> void;
 
+/**
+ * @brief Comprehensive deferred renderer setup demonstrating rendergraph resource
+ * management. This implementation shows how to efficiently organize multi-pass rendering
+ * workflows
+ */
 auto setup_deferred_renderer(RenderGraph& graph, uint32_t width, uint32_t height) -> void;
 
-class Renderer {
-}; // class Renderer
+class Renderer {}; // class Renderer
 
 #endif // SAPLING_ENGINE_RENDERER_H

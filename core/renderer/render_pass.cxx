@@ -19,10 +19,31 @@
 
 #include "render_pass.h"
 
-
 namespace sap::core::renderer {
 
+const std::string& RenderPass::name() const { return m_name; }
 
+void RenderPass::add_dependency(const std::string& dependency) {
+    m_deps.push_back(dependency);
+}
+
+const std::vector<std::string>& RenderPass::dependencies() const { return m_deps; }
+
+void RenderPass::set_render_target(RenderTarget *target) { m_target = target; }
+
+RenderTarget *RenderPass::target() const { return m_target; }
+
+void RenderPass::enable_as(bool enable) { m_enabled = enable; }
+
+bool RenderPass::is_enabled() const { return m_enabled; }
+
+void RenderPass::execute(vk::raii::CommandBuffer& cmdbuf) {
+    if (!m_enabled)
+        return;
+
+    begin_pass(cmdbuf);
+    render(cmdbuf);
+    end_pass(cmdbuf);
 }
 
 } // namespace sap::core::renderer

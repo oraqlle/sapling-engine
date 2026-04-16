@@ -1,4 +1,4 @@
-// <core/resources/post_process_render_pass.h> -*- C++ -*-
+// <core/resources/post_processing_render_pass.h> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,8 +17,8 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#ifndef SAPLING_ENGINE_POST_PROCESS_RENDER_PASS_H
-#define SAPLING_ENGINE_POST_PROCESS_RENDER_PASS_H
+#ifndef SAPLING_ENGINE_POST_PROCESSING_RENDER_PASS_H
+#define SAPLING_ENGINE_POST_PROCESSING_RENDER_PASS_H
 
 #include "lighting_render_pass.h"
 #include "render_pass.h"
@@ -59,4 +59,4 @@ protected:
 
 } // namespace sap::core::renderer
 
-#endif // SAPLING_ENGINE_POST_PROCESS_RENDER_PASS_H
+#endif // SAPLING_ENGINE_POST_PROCESSING_RENDER_PASS_H

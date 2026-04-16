@@ -19,8 +19,6 @@
 
 #include "culling_system.h"
 
-#include <vector>
-
 namespace sap::core::renderer {
 
 auto CullingSystem::CullingSystem(Camera *camera) : m_camera(camera) {}
@@ -56,8 +54,8 @@ auto CullingSystem::cull_scene(const std::vector<Entity *>& scene_entities) -> v
         auto bounding_box = mesh_component->bounding_box();
         bounding_box.transform(transform_component->transformation_matrix());
 
-        if (frustum.intersects(bounding_box) {
-            m_visable_entities.push_back(entity);
+        if (frustum.intersects(bounding_box)) {
+            m_visible_entities.push_back(entity);
         }
     }
 }

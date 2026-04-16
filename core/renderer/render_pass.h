@@ -53,7 +53,7 @@ public:
     
     auto enable_as(bool enable) -> void;
 
-    auto is_enabled() -> bool;
+    auto is_enabled() const -> bool;
 
     virtual void execute(vk::raii::CommandBuffer& cmdbuf);
 

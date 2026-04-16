@@ -1,4 +1,4 @@
-// <core/resources/post_process_render_pass.cxx> -*- C++ -*-
+// <core/resources/post_processing_render_pass.cxx> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,7 +17,7 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#include "post_process_render_pass.h"
+#include "post_processing_render_pass.h"
 
 #include <string>
 

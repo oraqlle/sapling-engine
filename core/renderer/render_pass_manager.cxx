@@ -19,10 +19,79 @@
 
 #include "render_pass_manager.h"
 
-
 namespace sap::core::renderer {
 
+RenderPass *RenderPassManager::get_render_pass(const std::string& name) {
+    auto it = m_render_passes.find(name);
+    if (it != m_render_passes.end()) {
+        return it->second.get();
+    }
+    return nullptr;
+}
 
+void RenderPassManager::remove_render_pass(const std::string& name) {
+    auto it = m_render_passes.find(name);
+    if (it != m_render_passes.end()) {
+        m_render_passes.erase(it);
+        m_dirty = true;
+    }
+}
+
+void RenderPassManager::execute(vk::raii::CommandBuffer& cmdbuf) {
+    if (m_dirty) {
+        _M_sort_passes();
+        m_dirty = false;
+    }
+
+    for (auto pass : m_sorted_passes) {
+        pass->execute(cmdbuf);
+    }
+}
+
+void RenderPassManager::_M_sort_passes() {
+    // Topologically sort render passes based on dependencies
+    m_sorted_passes.clear();
+
+    // Create a copy of render passes for sorting
+    std::unordered_map<std::string, RenderPass *> pass_map;
+    for (const auto& [name, pass] : m_render_passes) {
+        pass_map[name] = pass.get();
+    }
+
+    // Perform topological sort
+    std::unordered_set<std::string> visited;
+    std::unordered_set<std::string> visiting;
+
+    for (const auto& [name, pass] : pass_map) {
+        if (visited.find(name) == visited.end()) {
+            _M_topological_sort(name, pass_map, visited, visiting);
+        }
+    }
+}
+
+void RenderPassManager::_M_topological_sort(
+    const std::string& name,
+    const std::unordered_map<std::string, RenderPass *>& pass_map,
+    std::unordered_set<std::string>& visited, std::unordered_set<std::string>& visiting
+) {
+    visiting.insert(name);
+
+    auto pass = pass_map.at(name);
+    for (const auto& dep : pass->dependencies()) {
+        if (visited.find(dep) == visited.end()) {
+            if (visiting.find(dep) != visiting.end()) {
+
+                // Circular dependency detected
+                throw std::runtime_error("Circular dependency detected in render passes");
+            }
+
+            _M_topological_sort(dep, pass_map, visited, visiting);
+        }
+    }
+
+    visiting.erase(name);
+    visited.insert(name);
+    m_sorted_passes.push_back(pass);
 }
 
 } // namespace sap::core::renderer

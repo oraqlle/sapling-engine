@@ -8,8 +8,6 @@ message("Compiling module: [renderer] for [core]")
 add_library(sapling-core-renderer SHARED)
 target_compile_features(sapling-core-renderer PUBLIC cxx_std_20)
 
-
-
 target_sources(
     sapling-core-renderer
     PRIVATE
