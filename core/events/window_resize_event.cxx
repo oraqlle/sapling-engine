@@ -35,7 +35,7 @@ auto WindowResizeEvent::type_name() const -> const std::string_view {
 }
 
 auto WindowResizeEvent::clone() const -> std::unique_ptr<Event> {
-    return std::make_shared<WindowResizeEvent>(*this);
+    return std::make_unique<WindowResizeEvent>(*this);
 };
 
 auto WindowResizeEvent::static_type_name() -> const std::string_view {

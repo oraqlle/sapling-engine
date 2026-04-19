@@ -1,4 +1,4 @@
-// <core/resources/keypress_event.cxx> -*- C++ -*-
+// <core/renderer/event_bus.h> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,30 +17,44 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#include "keypress_event.h"
+#ifndef SAPLING_ENGINE_EVENT_BUS_H
+#define SAPLING_ENGINE_EVENT_BUS_H
+
+#include "base_event.h"
+#include "event_listener.h"
 
 #include <memory>
-#include <string_view>
+#include <mutex>
+#include <queue>
+#include <vector>
 
 namespace sap::core::events {
 
-KeypressEvent::KeypressEvent(uint32_t key, bool repeat)
-    : m_keycode(key), m_repeat(repeat) {}
+class EventBus {
+private:
+    std::vector<std::weak_ptr<EventListener>> m_listeners;
 
-auto KeypressEvent::keycode() const -> uint32_t { return m_keycode; }
+    std::queue<std::unique_ptr<Event>> m_event_queue;
 
-auto KeypressEvent::repeated() const -> uint32_t { return m_repeat; }
+    std::mutex m_queue_mtx;
+    bool m_immediate_mode = true;
 
-auto KeypressEvent::type_name() const -> const std::string_view {
-    return "KeypressEvent";
-}
+public:
+    auto set_immediate_mode(bool immediate) -> void;
 
-auto KeypressEvent::clone() const -> std::unique_ptr<Event> {
-    return std::make_unique<KeypressEvent>(*this);
-};
+    auto add_listener(std::weak_ptr<EventListener> listener) -> void;
 
-auto KeypressEvent::static_type_name() -> const std::string_view {
-    return "KeypressEvent";
-}
+    auto remove_listener(std::weak_ptr<EventListener> listener) -> void;
+
+    auto publish_event(const Event& event) -> void;
+
+    auto process_events() -> void;
+
+private:
+    auto _M_send_event_to_listeners(const Event& event) -> void;
+
+}; // class EventBus
 
 } // namespace sap::core::events
+
+#endif // SAPLING_ENGINE_EVENT_BUS_H
