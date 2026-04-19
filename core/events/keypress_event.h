@@ -23,25 +23,28 @@
 #include "base_event.h"
 
 #include <cinttypes>
+#include <memory>
 #include <string_view>
 
 namespace sap::core::events {
 
-class KeypressEvent : public Event<KeypressEvent> {
+class KeypressEvent : public Event {
 private:
     uint32_t m_keycode;
     bool m_repeat;
 
 public:
-    KeypressEvent(uint32_t key, bool repeat) : m_keycode(key), m_repeat(repeat) {}
+    explicit KeypressEvent(uint32_t key, bool repeat);
 
-    auto keycode() const -> uint32_t { return m_keycode; }
+    auto keycode() const -> uint32_t;
 
-    auto repeated() const -> uint32_t { return m_repeat; }
+    auto repeated() const -> uint32_t;
 
-    auto type_name() -> const std::string_view { return "KeypressEvent"; }
+    auto clone() const -> std::unique_ptr<Event> override;
 
-    static auto static_type_name() -> const std::string_view { return "KeypressEvent"; }
+    auto type_name() const -> const std::string_view override;
+
+    static auto static_type_name() -> const std::string_view;
 
 }; // class Event
 

@@ -1,4 +1,4 @@
-// <core/resources/window_resize_event.h> -*- C++ -*-
+// <core/resources/keypress_event.cxx> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,36 +17,30 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#ifndef SAPLING_ENGINE_WINDOW_RESIZE_EVENT_H
-#define SAPLING_ENGINE_WINDOW_RESIZE_EVENT_H
+#include "keypress_event.h"
 
-#include "base_event.h"
-
-#include <cinttypes>
+#include <memory>
 #include <string_view>
 
 namespace sap::core::events {
 
-class WindowResizeEvent : public Event {
-private:
-    uint32_t m_width;
-    uint32_t m_height;
+KeypressEvent::KeypressEvent(uint32_t key, bool repeat)
+    : m_keycode(key), m_repeat(repeat) {}
 
-public:
-    explicit WindowResizeEvent(uint32_t width, uint32_t height);
+auto KeypressEvent::keycode() const -> uint32_t { return m_keycode; }
 
-    auto width() const -> uint32_t;
+auto KeypressEvent::repeated() const -> uint32_t { return m_repeat; }
 
-    auto height() const -> uint32_t;
+auto KeypressEvent::type_name() const -> const std::string_view {
+    return "KeypressEvent";
+}
 
-    auto clone() const -> std::unique_ptr<Event> override;
+auto KeypressEvent::clone() const -> std::unique_ptr<Event> {
+    return std::make_shared<KeypressEvent>(*this);
+};
 
-    auto type_name() const -> const std::string_view override;
-
-    static auto static_type_name() -> const std::string_view;
-
-}; // class Event
+auto KeypressEvent::static_type_name() -> const std::string_view {
+    return "KeypressEvent";
+}
 
 } // namespace sap::core::events
-
-#endif // SAPLING_ENGINE_WINDOW_RESIZE_EVENT_H

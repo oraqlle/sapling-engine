@@ -1,4 +1,4 @@
-// <core/resources/window_resize_event.h> -*- C++ -*-
+// <core/resources/window_resize_event.cxx> -*- C++ -*-
 
 //  Sapling 3D Game Engine
 //  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
@@ -17,36 +17,29 @@
 //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 //  USA
 
-#ifndef SAPLING_ENGINE_WINDOW_RESIZE_EVENT_H
-#define SAPLING_ENGINE_WINDOW_RESIZE_EVENT_H
+#include "window_resize_event.h"
 
-#include "base_event.h"
-
-#include <cinttypes>
 #include <string_view>
 
 namespace sap::core::events {
 
-class WindowResizeEvent : public Event {
-private:
-    uint32_t m_width;
-    uint32_t m_height;
+WindowResizeEvent::WindowResizeEvent(uint32_t width, uint32_t height)
+    : m_width(width), m_height(height) {}
 
-public:
-    explicit WindowResizeEvent(uint32_t width, uint32_t height);
+auto WindowResizeEvent::width() const -> uint32_t { return m_width; }
 
-    auto width() const -> uint32_t;
+auto WindowResizeEvent::height() const -> uint32_t { return m_height; }
 
-    auto height() const -> uint32_t;
+auto WindowResizeEvent::type_name() const -> const std::string_view {
+    return "WindowResizeEvent";
+}
 
-    auto clone() const -> std::unique_ptr<Event> override;
+auto WindowResizeEvent::clone() const -> std::unique_ptr<Event> {
+    return std::make_shared<WindowResizeEvent>(*this);
+};
 
-    auto type_name() const -> const std::string_view override;
-
-    static auto static_type_name() -> const std::string_view;
-
-}; // class Event
+auto WindowResizeEvent::static_type_name() -> const std::string_view {
+    return "WindowResizeEvent";
+}
 
 } // namespace sap::core::events
-
-#endif // SAPLING_ENGINE_WINDOW_RESIZE_EVENT_H

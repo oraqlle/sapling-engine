@@ -24,16 +24,18 @@
 
 namespace sap::core::events {
 
-template <typename U> class EventDispatcher {
+class EventDispatcher {
 private:
-    const Event<U>& m_event;
+    const Event& m_event;
 
 public:
-    explicit EventDispatcher(const Event<U> event) : m_event(event) {}
+    explicit EventDispatcher(const Event& event)
+        : m_event(event) {}
 
-    template <typename T, typename F> auto dispatch(const F& handler) -> bool {
+    template <typename T, typename F>
+    auto dispatch(const F& handler) -> bool {
         if (m_event.type_name() == T::static_type_name()) {
-            handler(static_cast<U>(m_event));
+            handler(static_cast<const T&>(m_event));
             return true;
         }
 

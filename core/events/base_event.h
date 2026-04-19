@@ -20,25 +20,18 @@
 #ifndef SAPLING_ENGINE_BASE_EVENT_H
 #define SAPLING_ENGINE_BASE_EVENT_H
 
+#include <memory>
 #include <string_view>
 
 namespace sap::core::events {
 
-template <typename Derived>
 class Event {
-
 public:
-    auto type_name() -> const std::string_view {
-        return static_cast<Derived>(*this)->type_name();
-    }
+    virtual ~Event() = default;
 
-    static auto static_type_name() -> const std::string_view {
-        return Derived::static_type_name();
-    }
+    virtual auto type_name() const -> const std::string_view = 0;
 
-    auto clone() -> Derived* {
-        return new Derived(*this);
-    }
+    virtual auto clone() const -> std::unique_ptr<Event> = 0;
 
 }; // class Event
 

@@ -24,11 +24,11 @@
 
 namespace sap::core::events {
 
-template <typename Derived> class EventListener {
+class EventListener {
 public:
-    template <typename T> auto on_event(const Event<T>& event) {
-        return static_cast<Derived>(*this)->on_event(event);
-    }
+    virtual ~EventListener() = default;
+
+    virtual auto on_event(const Event& event) -> void = 0;
 
 }; // class EventListener
 
