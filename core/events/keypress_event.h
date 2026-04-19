@@ -22,7 +22,7 @@
 
 #include "base_event.h"
 
-#include <cinttypes>
+#include <cstdint>
 #include <memory>
 #include <string_view>
 
@@ -43,6 +43,8 @@ public:
     auto clone() const -> std::unique_ptr<Event> override;
 
     auto type_name() const -> const std::string_view override;
+
+    auto category_flags() const -> uint8_t override;
 
     static auto static_type_name() -> const std::string_view;
 

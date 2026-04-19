@@ -18,6 +18,7 @@
 //  USA
 
 #include "keypress_event.h"
+#include "base_event.h"
 
 #include <memory>
 #include <string_view>
@@ -25,19 +26,25 @@
 namespace sap::core::events {
 
 KeypressEvent::KeypressEvent(uint32_t key, bool repeat)
-    : m_keycode(key), m_repeat(repeat) {}
+    : m_keycode(key)
+    , m_repeat(repeat) {}
 
 auto KeypressEvent::keycode() const -> uint32_t { return m_keycode; }
 
 auto KeypressEvent::repeated() const -> uint32_t { return m_repeat; }
 
+auto KeypressEvent::clone() const -> std::unique_ptr<Event> {
+    return std::make_unique<KeypressEvent>(*this);
+};
+
 auto KeypressEvent::type_name() const -> const std::string_view {
     return "KeypressEvent";
 }
 
-auto KeypressEvent::clone() const -> std::unique_ptr<Event> {
-    return std::make_unique<KeypressEvent>(*this);
-};
+auto KeypressEvent::category_flags() const -> uint8_t {
+    return static_cast<uint8_t>(EventCategory::Input) |
+           static_cast<uint8_t>(EventCategory::Keyboard);
+}
 
 auto KeypressEvent::static_type_name() -> const std::string_view {
     return "KeypressEvent";
