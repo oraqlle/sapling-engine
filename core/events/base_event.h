@@ -26,7 +26,7 @@
 
 namespace sap::core::events {
 
-enum class EventCategory : uint8_t {
+enum class EventCategory : int8_t {
     None = 0,
     Application = 1 << 0,
     Input = 1 << 1,
@@ -44,10 +44,10 @@ public:
 
     virtual auto clone() const -> std::unique_ptr<Event> = 0;
 
-    virtual auto category_flags() const -> uint8_t = 0;
+    virtual auto category_flags() const -> int8_t = 0;
 
     auto is_in_category(const EventCategory category) const -> bool {
-        return static_cast<bool>(category_flags() & static_cast<uint8_t>(category));
+        return static_cast<bool>(category_flags() & static_cast<int8_t>(category));
     }
 
 }; // class Event

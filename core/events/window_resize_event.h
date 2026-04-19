@@ -43,7 +43,7 @@ public:
 
     auto type_name() const -> const std::string_view override;
 
-    auto category_flags() const -> uint8_t override;
+    auto category_flags() const -> int8_t override;
 
     static auto static_type_name() -> const std::string_view;
 

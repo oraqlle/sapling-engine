@@ -32,7 +32,23 @@ namespace sap::core::events {
 
 class EventBus {
 private:
-    std::vector<std::weak_ptr<EventListener>> m_listeners;
+    struct ListenerInfo {
+        std::weak_ptr<EventListener> listener;
+        int8_t category_filter;
+        uint32_t priority;
+
+        auto equal_listener(const std::weak_ptr<EventListener>& other) noexcept -> bool {
+            if (other.expired()) {
+                return false;
+            }
+
+            return !listener.owner_before(other) && !other.owner_before(listener);
+        }
+
+        auto operator<(const ListenerInfo
+    }; // struct ListenerInfo
+
+    std::vector<ListenerInfo> m_listeners;
 
     std::queue<std::unique_ptr<Event>> m_event_queue;
 
@@ -42,7 +58,9 @@ private:
 public:
     auto set_immediate_mode(bool immediate) -> void;
 
-    auto add_listener(std::weak_ptr<EventListener> listener) -> void;
+    auto add_listener(
+        std::weak_ptr<EventListener> listener, int8_t category_filter, uint32_t priority
+    ) -> void;
 
     auto remove_listener(std::weak_ptr<EventListener> listener) -> void;
 

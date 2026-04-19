@@ -39,9 +39,9 @@ auto WindowResizeEvent::type_name() const -> const std::string_view {
     return "WindowResizeEvent";
 }
 
-auto WindowResizeEvent::category_flags() const -> uint8_t {
-    return static_cast<uint8_t>(EventCategory::Application) |
-           static_cast<uint8_t>(EventCategory::Window);
+auto WindowResizeEvent::category_flags() const -> int8_t {
+    return static_cast<int8_t>(EventCategory::Application) |
+           static_cast<int8_t>(EventCategory::Window);
 }
 
 auto WindowResizeEvent::static_type_name() -> const std::string_view {

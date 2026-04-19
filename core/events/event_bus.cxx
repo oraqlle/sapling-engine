@@ -34,8 +34,16 @@ auto EventBus::set_immediate_mode(bool immediate) -> void {
     m_immediate_mode = immediate;
 }
 
-auto EventBus::add_listener(std::weak_ptr<EventListener> listener) -> void {
-    m_listeners.push_back(listener);
+auto EventBus::add_listener(
+    std::weak_ptr<EventListener> listener, int8_t category_filter = -1,
+    uint32_t priority = 0
+) -> void {
+
+    m_listeners.push_back({
+        .listener = listener,
+        .category_filter = category_filter,
+        .priority = priority
+    });
 }
 
 auto EventBus::remove_listener(std::weak_ptr<EventListener> listener) -> void {

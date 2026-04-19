@@ -41,9 +41,9 @@ auto KeypressEvent::type_name() const -> const std::string_view {
     return "KeypressEvent";
 }
 
-auto KeypressEvent::category_flags() const -> uint8_t {
-    return static_cast<uint8_t>(EventCategory::Input) |
-           static_cast<uint8_t>(EventCategory::Keyboard);
+auto KeypressEvent::category_flags() const -> int8_t {
+    return static_cast<int8_t>(EventCategory::Input) |
+           static_cast<int8_t>(EventCategory::Keyboard);
 }
 
 auto KeypressEvent::static_type_name() -> const std::string_view {
