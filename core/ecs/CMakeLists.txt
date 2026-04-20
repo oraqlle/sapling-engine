@@ -6,7 +6,7 @@ message("Compiling module: [ecs] for [core]")
 add_library(sapling-core-ecs SHARED)
 target_compile_features(sapling-core-ecs PUBLIC cxx_std_20)
 
-target_source(
+target_sources(
     sapling-core-ecs
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/entity.cxx"

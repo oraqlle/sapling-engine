@@ -6,7 +6,7 @@ message("Compiling module: [math] for [core]")
 add_library(sapling-core-math SHARED)
 target_compile_features(sapling-core-math PUBLIC cxx_std_20)
 
-target_source(
+target_sources(
     sapling-core-math
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/bounding_box.cxx"
