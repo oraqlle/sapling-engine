@@ -1,7 +1,7 @@
 // <core/resources/render_pass_manager.h> -*- C++ -*-
 
 //  Sapling 3D Game Engine
-//  Copyright (C) 2026  Tyler Swann, Georgia Kannelis
+//  Copyright (C) 2026  Tyler Swann, Georgia Kanellis
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Lesser General Public
