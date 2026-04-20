@@ -34,7 +34,7 @@ namespace sap::core::ecs {
         private:
             std::uint64_t m_id;
             bool m_active = true;
-            std::unordered_map<std::type_index, std::unique_ptr<Component>> m_component;
+            std::unordered_map<std::type_index, std::unique_ptr<Component>> m_components;
 
             static auto next_id() -> std::uint64_t;
 
@@ -51,13 +51,13 @@ namespace sap::core::ecs {
             auto set_active(bool active) -> void { m_active = active; }
 
         template <typename T>
-        auto get_component() const const -> T * {
+        auto get_component() const -> T * {
             static_assert(
                 std::is_base_of_v<Component, T>,
                 "T must derive from Component"
             );
             auto iter = m_component.find(std::type_index(typeid(T)));
-            ifg (iter == m_components.end()) {
+            if (iter == m_components.end()) {
                 return nullptr;
             }
             return static_cast<T *>(iter->second.get());
@@ -77,17 +77,17 @@ namespace sap::core::ecs {
             auto component =std::make_unique<T>(std::forward<Args>(args)...);
             component->set_owner(this);
             auto *raw = component.get();
-            m_compoennts[std::type_index(typeid(T))] = std::move(component);
+            m_components[std::type_index(typeid(T))] = std::move(component);
             return raw;
         }
 
         template <typename T>
         auto remove_component() -> void {
             static_asset(
-                std:is_base_of_v<Component, T>,
+                std::is_base_of_v<Component, T>,
                 "T must derive from Component"
             );
-            m_components.erase(std::teype_index(typeid(T)));
+            m_components.erase(std::type_index(typeid(T)));
         }
 
     }; // class Entity
