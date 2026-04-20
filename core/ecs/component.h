@@ -40,6 +40,6 @@ namespace sap::core::ecs {
 
     }; // class Component
 
-} // namespace::core::ecs
+} // namespace sap::core::ecs
 
 #endif // SAPLING_ENGINE_COMPONENT_H

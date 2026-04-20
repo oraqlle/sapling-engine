@@ -70,7 +70,7 @@ namespace sap::core::ecs {
 
         template <typename T, typename... Args>
         auto add_component(Args&&... args) -> T * {
-            static_asset(
+            static_assert(
                 std::is_base_of_v<Component, T>,
                 "T must derive from Component"
             );
@@ -83,7 +83,7 @@ namespace sap::core::ecs {
 
         template <typename T>
         auto remove_component() -> void {
-            static_asset(
+            static_assert(
                 std::is_base_of_v<Component, T>,
                 "T must derive from Component"
             );
