@@ -56,7 +56,7 @@ namespace sap::core::ecs {
                 std::is_base_of_v<Component, T>,
                 "T must derive from Component"
             );
-            auto iter = m_component.find(std::type_index(typeid(T)));
+            auto iter = m_components.find(std::type_index(typeid(T)));
             if (iter == m_components.end()) {
                 return nullptr;
             }
